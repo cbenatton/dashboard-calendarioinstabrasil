@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendário Editorial — @kwikledgersbr · Julho 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+  :root {
+    --blue: #1F3FD0;
+    --orange: #FF4E1C;
+    --green: #1D9E75;
+    --teal-light: #E1F5EE;
+    --teal-text: #0F6E56;
+    --blue-light: #E6F1FB;
+    --blue-text: #185FA5;
+    --amber-light: #FAEEDA;
+    --amber-text: #854F0B;
+    --red-light: #FCEBEB;
+    --red-text: #A32D2D;
+    --purple-light: #EEEDFE;
+    --purple-text: #534AB7;
+    --gray-50: #F8F8F7;
+    --gray-100: #F1F0EC;
+    --gray-200: #E2E1DB;
+    --gray-400: #999890;
+    --gray-600: #5F5E5A;
+    --gray-900: #1A1A18;
+    --border: rgba(0,0,0,0.1);
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--gray-50);
+    color: var(--gray-900);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  .topbar {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .topbar-brand { font-size: 15px; font-weight: 600; color: var(--blue); }
+  .topbar-sub { font-size: 12px; color: var(--gray-400); margin-top: 1px; }
+  .topbar-nav { display: flex; gap: 6px; }
+  .nav-btn {
+    font-size: 12px; padding: 5px 12px; border-radius: 20px;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--gray-600); cursor: pointer; font-family: inherit;
+    transition: background .15s, border-color .15s;
+    text-decoration: none; display: inline-block;
+  }
+  .nav-btn:hover { background: var(--gray-100); border-color: var(--gray-200); }
+  .nav-btn.active { background: var(--blue); color: white; border-color: var(--blue); }
+
+  /* LAYOUT */
+  .container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+  .page-header { margin-bottom: 2rem; }
+  .page-title { font-size: 26px; font-weight: 600; color: var(--gray-900); margin-bottom: 4px; }
+  .page-sub { font-size: 14px; color: var(--gray-400); }
+
+  /* STATS */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    margin-bottom: 2rem;
+  }
+  .stat-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+  }
+  .stat-label { font-size: 11px; color: var(--gray-400); margin-bottom: 4px; }
+  .stat-value { font-size: 24px; font-weight: 600; color: var(--gray-900); }
+  .stat-sub { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+
+  /* LEGEND */
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    margin-bottom: 1.5rem;
+    font-size: 12px; color: var(--gray-600);
+  }
+  .legend span { display: flex; align-items: center; gap: 6px; }
+
+  /* BADGES */
+  .badge {
+    display: inline-block; font-size: 10px; font-weight: 500;
+    padding: 2px 8px; border-radius: 20px; white-space: nowrap;
+  }
+  .badge-reel { background: var(--teal-light); color: var(--teal-text); }
+  .badge-carr { background: var(--blue-light); color: var(--blue-text); }
+  .badge-img  { background: var(--amber-light); color: var(--amber-text); }
+  .badge-top  { background: var(--red-light); color: var(--red-text); }
+  .badge-obj-a { background: var(--teal-light); color: var(--teal-text); }
+  .badge-obj-c { background: var(--amber-light); color: var(--amber-text); }
+  .badge-obj-s { background: var(--blue-light); color: var(--blue-text); }
+  .badge-obj-p { background: var(--purple-light); color: var(--purple-text); }
+
+  /* CALENDAR SECTION */
+  .week-section { margin-bottom: 2.5rem; }
+  .week-title {
+    font-size: 11px; font-weight: 600; color: var(--gray-400);
+    text-transform: uppercase; letter-spacing: .07em;
+    margin-bottom: .75rem;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .week-title::after { content: ''; flex: 1; height: 1px; background: var(--gray-200); }
+
+  .week-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+  .day-header {
+    font-size: 11px; font-weight: 500; color: var(--gray-400);
+    text-align: center; padding: 4px 0;
+  }
+  .cal-cell {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 10px;
+    min-height: 110px;
+    display: flex; flex-direction: column; gap: 5px;
+    cursor: pointer;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .cal-cell:hover { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(31,63,208,.07); }
+  .cal-cell.highlight { border-color: var(--green); }
+  .cal-cell.empty { background: var(--gray-100); border-color: transparent; cursor: default; }
+  .cal-cell.empty:hover { border-color: transparent; box-shadow: none; }
+  .cell-date { font-size: 10px; color: var(--gray-400); }
+  .cell-title { font-size: 12px; font-weight: 500; color: var(--gray-900); line-height: 1.4; flex: 1; }
+  .cell-obj { font-size: 10px; color: var(--gray-400); margin-top: auto; }
+
+  /* POST DETAIL SECTION */
+  .section-header {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 1.25rem; flex-wrap: wrap;
+  }
+  .section-title-text { font-size: 18px; font-weight: 600; color: var(--gray-900); }
+
+  .post-block {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  .post-block-header {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; justify-content: space-between;
+    flex-wrap: wrap; gap: 8px;
+  }
+  .post-block-title { font-size: 15px; font-weight: 600; color: var(--gray-900); margin-bottom: 4px; }
+  .post-block-meta { font-size: 12px; color: var(--gray-400); }
+  .post-block-body { padding: 1.25rem; }
+
+  .inner-section { margin-bottom: 1.25rem; }
+  .inner-section:last-child { margin-bottom: 0; }
+  .inner-label {
+    font-size: 10px; font-weight: 600; color: var(--gray-400);
+    text-transform: uppercase; letter-spacing: .07em;
+    margin-bottom: .6rem;
+  }
+
+  /* REEL ROWS */
+  .reel-row {
+    display: grid; grid-template-columns: 90px 1fr;
+    gap: 12px; padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+    align-items: start;
+  }
+  .reel-row:last-child { border-bottom: none; }
+  .reel-time { font-size: 11px; font-weight: 500; color: var(--gray-400); line-height: 1.4; }
+  .reel-screen {
+    font-size: 12px; font-weight: 600; color: var(--blue);
+    margin-bottom: 3px;
+  }
+  .reel-talk { font-size: 12px; color: var(--gray-600); font-style: italic; line-height: 1.6; }
+
+  /* SLIDE ROWS */
+  .slide-row {
+    display: grid; grid-template-columns: 32px 1fr;
+    gap: 10px; padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+    align-items: start;
+  }
+  .slide-row:last-child { border-bottom: none; }
+  .slide-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--gray-100);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600; color: var(--gray-600);
+    flex-shrink: 0;
+  }
+  .slide-art { font-size: 12px; font-weight: 500; color: var(--gray-900); margin-bottom: 3px; }
+  .slide-copy { font-size: 12px; color: var(--gray-600); line-height: 1.6; }
+
+  /* LEGENDA BOX */
+  .legenda-box {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.1rem;
+    font-size: 13px; color: var(--gray-900);
+    line-height: 1.9; white-space: pre-wrap;
+  }
+
+  /* ARTE BOX */
+  .arte-box {
+    background: var(--blue-light);
+    border-radius: var(--radius-md);
+    padding: .9rem 1rem;
+    font-size: 13px; color: var(--gray-900); line-height: 1.7;
+  }
+
+  /* ALERT */
+  .alert {
+    border-left: 3px solid; border-radius: 0;
+    padding: .65rem 1rem; font-size: 12px; color: var(--gray-900);
+    margin-bottom: .75rem;
+  }
+  .alert-s { background: var(--teal-light); border-color: var(--green); }
+  .alert-i { background: var(--blue-light); border-color: #378ADD; }
+  .alert-w { background: var(--amber-light); border-color: #EF9F27; }
+
+  .divider { border: none; border-top: 1px solid var(--gray-200); margin: 2rem 0; }
+
+  /* TIPS */
+  .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-top: 1rem; }
+  .tip-card { background: white; border: 1px solid var(--border); border-radius: var(--radius-md); padding: .9rem; }
+  .tip-title { font-size: 13px; font-weight: 600; color: var(--gray-900); margin-bottom: 5px; }
+  .tip-body { font-size: 12px; color: var(--gray-600); line-height: 1.7; }
+
+  /* PRINT */
+  @media print {
+    .topbar { display: none; }
+    .post-block { break-inside: avoid; }
+  }
+
+  @media (max-width: 640px) {
+    .week-grid { grid-template-columns: 1fr 1fr; }
+    .topbar-nav { display: none; }
+    .reel-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="topbar-brand">@kwikledgersbr</div>
+    <div class="topbar-sub">Calendário editorial · Julho 2026</div>
+  </div>
+  <nav class="topbar-nav">
+    <a class="nav-btn" href="#calendario">Calendário</a>
+    <a class="nav-btn" href="#semana1">Sem 1</a>
+    <a class="nav-btn" href="#semana2">Sem 2</a>
+    <a class="nav-btn" href="#semana3">Sem 3</a>
+    <a class="nav-btn" href="#semana4">Sem 4</a>
+    <a class="nav-btn" href="#semana5">Sem 5</a>
+    <a class="nav-btn" href="#estrategia">Estratégia</a>
+  </nav>
+</div>
+
+<div class="container">
+
+  <div class="page-header">
+    <div class="page-title">Calendário editorial — julho 2026</div>
+    <div class="page-sub">@kwikledgersbr · 18 posts · 5 semanas · Head de Conteúdo & Growth Strategy</div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-label">Total de posts</div><div class="stat-value">18</div><div class="stat-sub">vs 5 em junho</div></div>
+    <div class="stat-card"><div class="stat-label">Reels</div><div class="stat-value">6</div><div class="stat-sub">1–2 por semana</div></div>
+    <div class="stat-card"><div class="stat-label">Carrosséis</div><div class="stat-value">9</div><div class="stat-sub">educativo + fiscal</div></div>
+    <div class="stat-card"><div class="stat-label">Imagens</div><div class="stat-value">3</div><div class="stat-sub">prova social</div></div>
+    <div class="stat-card"><div class="stat-label">Frequência</div><div class="stat-value">4–5</div><div class="stat-sub">posts/semana</div></div>
+    <div class="stat-card"><div class="stat-label">Posts prioritários</div><div class="stat-value">7</div><div class="stat-sub">alto impacto</div></div>
+  </div>
+
+  <div class="legend">
+    <span><span class="badge badge-reel">Reel</span> alcance máximo</span>
+    <span><span class="badge badge-carr">Carrossel</span> educativo · saves</span>
+    <span><span class="badge badge-img">Imagem</span> prova social</span>
+    <span><span class="badge badge-top">Prioritário</span> alto impacto</span>
+    <span style="color:#1D9E75;">■</span> borda verde = post prioritário
+  </div>
+
+  <!-- CALENDAR VIEW -->
+  <div id="calendario">
+    <div class="week-section" id="cal-sem1">
+      <div class="week-title">Semana 1 — 30 jun a 4 jul</div>
+      <div class="week-grid">
+        <div class="day-header">Seg 30/jun</div>
+        <div class="day-header">Ter 01/jul</div>
+        <div class="day-header">Qua 02/jul</div>
+        <div class="day-header">Qui 03/jul</div>
+        <div class="day-header">Sex 04/jul</div>
+      </div>
+      <div class="week-grid" style="margin-top:5px;">
+        <div class="cal-cell highlight" onclick="document.getElementById('semana1').scrollIntoView({behavior:'smooth'})">
+          <div class="cell-date">30/jun</div>
+          <div><span class="badge badge-reel">Reel</span> <span class="badge badge-top">top</span></div>
+          <div class="cell-title">3 erros que brasileiros cometem ao abrir LLC nos EUA</div>
+          <div class="cell-obj">alcance · viralidade</div>
+        </div>
+        <div class="cal-cell empty"></div>
+        <div class="cal-cell" onclick="document.getElementById('post-s1-2').scrollIntoView({behavior:'smooth'})">
+          <div class="cell-date">02/jul</div>
+          <div><span class="badge badge-carr">Carrossel</span></div>
+          <div class="cell-title">LLC vs C-Corp — qual serve para o seu modelo?</div>
+          <div class="cell-obj">educativo · saves</div>
+        </div>
+        <div class="cal-cell empty"></div>
+        <div class="cal-cell highlight" onclick="document.getElementById('post-s1-3').scrollIntoView({behavior:'smooth'})">
+          <div class="cell-date">04/jul</div>
+          <div><span class="badge badge-img">Imagem</span> <span class="badge badge-top">top</span></div>
+          <div class="cell-title">4 de julho — o que significa para quem tem empresa nos EUA</div>
+          <div class="cell-obj">sazonal · engajamento</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-section" id="cal-sem2">
+      <div class="week-title">Semana 2 — 7 a 11 jul</div>
+      <div class="week-grid">
+        <div class="day-header">Seg 07/jul</div>
+        <div class="day-header">Ter 08/jul</div>
+        <div class="day-header">Qua 09/jul</div>
+        <div class="day-header">Qui 10/jul</div>
+        <div class="day-header">Sex 11/jul</div>
+      </div>
+      <div class="week-grid" style="margin-top:5px;">
+        <div class="cal-cell" onclick="document.getElementById('semana2').scrollIntoView({behavior:'smooth'})">
+          <div class="cell-date">07/jul</div>
+          <div><span class="badge badge-reel">Reel</span></div>
+          <div class="cell-title">Você precisa morar nos EUA para ter empresa lá?</div>
+          <div class="cell-obj">objeção · alcance</div>
+        </div>
+        <div class="cal-cell" onclick="document.getElementById('post-s2-2').scrollIntoView({behavior:'smooth'})">
+          <div class="cell-date">08/jul</div>
+          <div><span class="badge badge-carr">Carrossel</span></div>
+          <div class="cell-title">Como funciona o processo da KwikLedgers — do zero à empresa aberta</div>
+          <div class="cell-obj">produto · confiança</div>
+        </div>
+        <div class="cal-cell empty"></div>
+        <div class="cal-cell highlight" onclick="document.getElementById('post-s2-3').scrollIntoView({behavior:'smooth'})">
+          <div class="cell-date">10/jul</div>
+          <div><span class="badge badge-carr">Carrossel</span> <span class="badge badge-top">top</span></div>
+          <div class="cell-title">Case real: como um empresário brasileiro abriu LLC e passou a faturar em dólar</div>
+          <div class="cell-obj">prova social · conversão</div>
+        </div>
+        <div class="cal-cell" onclick="document.getElementById('post-s2-4').scrollIntoView({behavior:'smooth'})">
+          <div class="cell-date">11/jul</div>
+          <div><span class="badge badge-reel">Reel</span></div>
+          <div class="cell-title">Copa nos EUA: 3 obrigações fiscais que a maioria ignora</div>
+          <div class="cell-obj">Copa · alcance</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-section" id="cal-sem3">
+      <div class="week-title">Semana 3 — 14 a 18 jul</div>
+      <div class="week-grid">
+        <div class="day-header">Seg 14/jul</div>
+        <div class="day-header">Ter 15/jul</div>
+        <div class="day-header">Qua 16/jul</div>
+        <div class="day-header">Qui 17/jul</div>
+        <div class="day-header">Sex 18/jul</div>
+      </div>
+      <div class="week-grid" style="margin-top:5px;">
+        <div class="cal-cell highlight" onclick="document.getElementById('semana3').scrollIntoView({behavior:'smooth'})">
+          <div class="cell-date">14/jul</div>
+          <div><span class="badge badge-carr">Carrossel</span> <span class="badge badge-top">top</span></div>
+          <div class="cell-title">Holding internacional — como proteger seu patrimônio pelos EUA</div>
+          <div class="cell-obj">saves · público 45–54</div>
+        </div>
+        <div class="cal-cell empty"></div>
+        <div class="cal-cell" onclick="document.getElementById('post-s3-2').scrollIntoView({behavior:'smooth'})">
+          <div class="cell-date">16/jul</div>
+          <div><span class="badge badge-reel">Reel</span></div>
+          <div class="cell-title">Quanto custa manter uma LLC nos EUA por ano?</div>
+          <div class="cell-obj">objeção · alcance</div>
+        </div>
+        <div class="cal-cell highlight" onclick="document.getElementById('post-s3-3').scrollIntoView({behavior:'smooth'})">
+          <div class="cell-date">17/jul</div>
+          <div><span class="badge badge-carr">Carrossel</span> <span class="badge badge-top">top</span></div>
+          <div class="cell-title">Receita Federal e LLC: o que mudou e o que fazer agora</div>
+          <div class="cell-obj">fiscal · urgência · saves</div>
+        </div>
+        <div class="cal-cell" onclick="document.getElementById('post-s3-4').scrollIntoView({behavior:'smooth'})">
+          <div class="cell-date">18/jul</div>
+          <div><span class="badge badge-img">Imagem</span></div>
+          <div class="cell-title">Bastidores KwikLedgers — equipe e missão</div>
+          <div class="cell-obj">humanização · confiança</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-section" id="cal-sem4">
+      <div class="week-title">Semana 4 — 21 a 25 jul</div>
+      <div class="week-grid">
+        <div class="day-header">Seg 21/jul</div>
+        <div class="day-header">Ter 22/jul</div>
+        <div class="day-header">Qua 23/jul</div>
+        <div class="day-header">Qui 24/jul</div>
+        <div class="day-header">Sex 25/jul</div>
+      </div>
+      <div class="week-grid" style="margin-top:5px;">
+        <div class="cal-cell" onclick="document.getElementById('semana4').scrollIntoView({behavior:'smooth'})">
+          <div class="cell-date">21/jul</div>
+          <div><span class="badge badge-carr">Carrossel</span></div>
+          <div class="cell-title">Meu negócio é pequeno demais para ter empresa nos EUA?</div>
+          <div class="cell-obj">objeção · qualificação</div>
+        </div>
+        <div class="cal-cell" onclick="document.getElementById('post-s4-2').scrollIntoView({behavior:'smooth'})">
+          <div class="cell-date">22/jul</div>
+          <div><span class="badge badge-reel">Reel</span></div>
+          <div class="cell-title">A pergunta errada que todo brasileiro faz antes de abrir LLC</div>
+          <div class="cell-obj">alcance · viralidade</div>
+        </div>
+        <div class="cal-cell empty"></div>
+        <div class="cal-cell highlight" onclick="document.getElementById('post-s4-3').scrollIntoView({behavior:'smooth'})">
+          <div class="cell-date">24/jul</div>
+          <div><span class="badge badge-carr">Carrossel</span> <span class="badge badge-top">top</span></div>
+          <div class="cell-title">Case real #2: holding nos EUA para proteção patrimonial</div>
+          <div class="cell-obj">prova social · saves</div>
+        </div>
+        <div class="cal-cell" onclick="document.getElementById('post-s4-4').scrollIntoView({behavior:'smooth'})">
+          <div class="cell-date">25/jul</div>
+          <div><span class="badge badge-carr">Carrossel</span></div>
+          <div class="cell-title">O que acontece com sua LLC se você parar de pagar os annual fees?</div>
+          <div class="cell-obj">urgência · retenção</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-section" id="cal-sem5">
+      <div class="week-title">Semana 5 — 28 a 30 jul</div>
+      <div class="week-grid">
+        <div class="day-header">Seg 28/jul</div>
+        <div class="day-header">Ter 29/jul</div>
+        <div class="day-header">Qua 30/jul</div>
+        <div class="day-header">Qui 31/jul</div>
+        <div class="day-header">Sex —</div>
+      </div>
+      <div class="week-grid" style="margin-top:5px;">
+        <div class="cal-cell" onclick="document.getElementById('semana5').scrollIntoView({behavior:'smooth'})">
+          <div class="cell-date">28/jul</div>
+          <div><span class="badge badge-carr">Carrossel</span></div>
+          <div class="cell-title">5 perguntas que mais recebemos em julho — respondidas</div>
+          <div class="cell-obj">engajamento · comunidade</div>
+        </div>
+        <div class="cal-cell" onclick="document.getElementById('post-s5-2').scrollIntoView({behavior:'smooth'})">
+          <div class="cell-date">29/jul</div>
+          <div><span class="badge badge-reel">Reel</span></div>
+          <div class="cell-title">Distribuição de lucros da LLC: o que a Receita Federal observa</div>
+          <div class="cell-obj">fiscal · alcance</div>
+        </div>
+        <div class="cal-cell highlight" onclick="document.getElementById('post-s5-3').scrollIntoView({behavior:'smooth'})">
+          <div class="cell-date">30/jul</div>
+          <div><span class="badge badge-img">Imagem</span> <span class="badge badge-top">top</span></div>
+          <div class="cell-title">Sua empresa nos EUA pode estar pronta em 7 a 10 dias úteis</div>
+          <div class="cell-obj">conversão · CTA direto</div>
+        </div>
+        <div class="cal-cell empty"></div>
+        <div class="cal-cell empty"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ========== SEMANA 1 ========== -->
+  <div id="semana1">
+    <div class="section-header">
+      <div class="section-title-text">Semana 1 — 30 jun a 4 jul</div>
+    </div>
+
+    <!-- POST S1-1 -->
+    <div class="post-block" id="post-s1-1">
+      <div class="post-block-header">
+        <div>
+          <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
+            <span class="badge badge-reel">Reel</span>
+            <span class="badge badge-top">Alta prioridade</span>
+            <span class="badge badge-obj-a">alcance · viralidade</span>
+          </div>
+          <div class="post-block-title">3 erros que brasileiros cometem ao abrir LLC nos EUA</div>
+          <div class="post-block-meta">30/jun (seg) · publicar 12h–13h · duração ideal 35–45s</div>
+        </div>
+      </div>
+      <div class="post-block-body">
+        <div class="inner-section">
+          <div class="inner-label">Roteiro — texto na tela + fala do apresentador</div>
+          <div class="reel-row">
+            <div class="reel-time">0–3s<br>Gancho</div>
+            <div>
+              <div class="reel-screen">TELA: "3 erros que vão custar caro na sua LLC"</div>
+              <div class="reel-talk">FALA: "Se você está pensando em abrir empresa nos EUA, presta atenção — esses erros são mais comuns do que você imagina."</div>
+            </div>
+          </div>
+          <div class="reel-row">
+            <div class="reel-time">3–12s<br>Erro 1</div>
+            <div>
+              <div class="reel-screen">TELA: "Erro #1: abrir no estado errado"</div>
+              <div class="reel-talk">FALA: "Muita gente abre LLC em Delaware ou Wyoming sem entender que, dependendo do seu negócio, isso pode gerar custos desnecessários. Estado certo depende do seu modelo."</div>
+            </div>
+          </div>
+          <div class="reel-row">
+            <div class="reel-time">12–22s<br>Erro 2</div>
+            <div>
+              <div class="reel-screen">TELA: "Erro #2: misturar pessoa física com jurídica"</div>
+              <div class="reel-talk">FALA: "Usar a conta da empresa para despesa pessoal destrói a proteção patrimonial da LLC. Isso se chama piercing the corporate veil — e elimina o que você abriu a empresa para ter."</div>
+            </div>
+          </div>
+          <div class="reel-row">
+            <div class="reel-time">22–33s<br>Erro 3</div>
+            <div>
+              <div class="reel-screen">TELA: "Erro #3: ignorar as obrigações no Brasil"</div>
+              <div class="reel-talk">FALA: "Ter LLC nos EUA não cancela suas obrigações com a Receita Federal. Lucros precisam ser declarados. Quem não faz isso está exposto a multas pesadas."</div>
+            </div>
+          </div>
+          <div class="reel-row">
+            <div class="reel-time">33–42s<br>CTA</div>
+            <div>
+              <div class="reel-screen">TELA: "Vai abrir LLC? Faz isso primeiro."</div>
+              <div class="reel-talk">FALA: "Antes de abrir qualquer empresa nos EUA, entende sua estrutura. Link na bio pra falar com a gente — é gratuito."</div>
+            </div>
+          </div>
+        </div>
+        <div class="inner-section">
+          <div class="inner-label">Legenda</div>
+          <div class="legenda-box">3 erros que podem custar caro na sua LLC nos EUA 🇺🇸
+
+Abrir empresa nos Estados Unidos ficou mais acessível. Mas cometer esses erros pode transformar uma oportunidade em problema.
+
+Erro #1 — Abrir no estado errado
+Delaware e Wyoming são populares, mas não são a melhor escolha para todo mundo. O estado ideal depende do seu modelo de negócio, onde você opera e como pretende crescer.
+
+Erro #2 — Misturar pessoa física com jurídica
+Usar a conta da empresa para gastos pessoais elimina a proteção que a LLC oferece. Isso tem nome: piercing the corporate veil. E quando acontece, você perde o principal benefício da estrutura.
+
+Erro #3 — Ignorar as obrigações no Brasil
+LLC nos EUA não significa isenção no Brasil. A Receita Federal exige declaração dos lucros no exterior. Quem não declara está exposto a autuações e multas.
+
+Estrutura certa desde o início evita todos esses problemas.
+
+👉 Salva esse post e manda pra quem está pensando em abrir empresa nos EUA.
+📲 Link na bio para um diagnóstico gratuito com a KwikLedgers.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST S1-2 -->
+    <div class="post-block" id="post-s1-2">
+      <div class="post-block-header">
+        <div>
+          <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
+            <span class="badge badge-carr">Carrossel</span>
+            <span class="badge badge-obj-s">educativo · saves</span>
+          </div>
+          <div class="post-block-title">LLC vs C-Corp — qual serve para o seu modelo de negócio?</div>
+          <div class="post-block-meta">02/jul (qua) · publicar 17h–19h · 8 slides</div>
+        </div>
+      </div>
+      <div class="post-block-body">
+        <div class="inner-section">
+          <div class="inner-label">Copy de cada slide</div>
+          <div class="slide-row"><div class="slide-num">1</div><div><div class="slide-art">ARTE: "LLC ou C-Corp? Tudo depende do seu negócio." — fundo escuro, tipografia grande.</div><div class="slide-copy">Subtítulo menor: "Desliza para entender a diferença na prática."</div></div></div>
+          <div class="slide-row"><div class="slide-num">2</div><div><div class="slide-art">ARTE: Título "O que é uma LLC?" com ícone de estrutura simples.</div><div class="slide-copy">Texto: "LLC (Limited Liability Company) é uma estrutura flexível, com menos burocracia e tributação direta para o sócio. É a favorita de quem presta serviço, opera negócio digital ou quer simplicidade na gestão."</div></div></div>
+          <div class="slide-row"><div class="slide-num">3</div><div><div class="slide-art">ARTE: Título "O que é uma C-Corp?" com ícone de organograma.</div><div class="slide-copy">Texto: "C-Corp é uma estrutura corporativa separada dos sócios, com tributação própria. É o formato preferido por startups que buscam investimento, empresas com múltiplos acionistas ou negócios que querem reinvestir lucros com alíquota menor."</div></div></div>
+          <div class="slide-row"><div class="slide-num">4</div><div><div class="slide-art">ARTE: Tabela comparativa — duas colunas, LLC vs C-Corp, fundo claro.</div><div class="slide-copy">• Tributação: Pass-through (sócio) vs Dupla (empresa + sócio)<br>• Burocracia: Baixa vs Média/Alta<br>• Ideal para: Serviços e digital vs Startups e investimento<br>• Investidores externos: Limitado vs Sim, fácil<br>• Custo de manutenção: Menor vs Maior</div></div></div>
+          <div class="slide-row"><div class="slide-num">5</div><div><div class="slide-art">ARTE: Título "Escolha LLC se..." com lista visual em verde.</div><div class="slide-copy">• Você presta serviços ou opera negócio digital<br>• Quer simplicidade operacional<br>• Não planeja captar investimento externo no curto prazo<br>• Quer separar patrimônio com menos burocracia</div></div></div>
+          <div class="slide-row"><div class="slide-num">6</div><div><div class="slide-art">ARTE: Título "Escolha C-Corp se..." com lista visual em azul.</div><div class="slide-copy">• Você busca investidores ou VCs<br>• Quer reinvestir lucros na empresa com carga menor<br>• Planeja abrir capital no futuro<br>• Tem ou pretende ter sócios internacionais</div></div></div>
+          <div class="slide-row"><div class="slide-num">7</div><div><div class="slide-art">ARTE: Frase de destaque — tipografia grande, fundo limpo.</div><div class="slide-copy">"A estrutura certa não é a mais popular. É a que faz sentido para o seu modelo."</div></div></div>
+          <div class="slide-row"><div class="slide-num">8</div><div><div class="slide-art">ARTE: CTA — "Ainda tem dúvida sobre qual é a ideal para você?" + logo KwikLedgers.</div><div class="slide-copy">Texto: "Fala com a gente no direct ou acessa o link na bio. Analisamos o seu modelo e indicamos a estrutura certa — sem custo."</div></div></div>
+        </div>
+        <div class="inner-section">
+          <div class="inner-label">Legenda</div>
+          <div class="legenda-box">LLC ou C-Corp? Essa dúvida aparece toda vez que um brasileiro decide abrir empresa nos EUA.
+
+E a resposta honesta é: depende do seu modelo de negócio.
+
+Não existe a estrutura "melhor". Existe a estrutura certa para o que você quer construir.
+
+→ Se você presta serviço, opera negócio digital ou quer simplicidade: LLC.
+→ Se você busca investidores, quer reinvestir lucros ou planeja crescer com sócios: C-Corp.
+
+Desliza para entender a diferença na prática — e descobrir qual faz mais sentido para o seu caso.
+
+💾 Salva esse post. Ele vai ser útil quando você estiver tomando essa decisão.
+
+Dúvida sobre o seu negócio? Comenta aqui ou chama no direct.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST S1-3 -->
+    <div class="post-block" id="post-s1-3">
+      <div class="post-block-header">
+        <div>
+          <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
+            <span class="badge badge-img">Imagem</span>
+            <span class="badge badge-top">Alta prioridade</span>
+            <span class="badge badge-obj-a">sazonal · engajamento</span>
+          </div>
+          <div class="post-block-title">4 de julho — o que significa para quem tem empresa nos EUA</div>
+          <div class="post-block-meta">04/jul (sex) · publicar 14h–16h · 1 imagem estática</div>
+        </div>
+      </div>
+      <div class="post-block-body">
+        <div class="inner-section">
+          <div class="inner-label">Arte — o que vai na imagem</div>
+          <div class="arte-box">Fundo azul escuro (#1F3FD0). Bandeira americana discreta ao fundo (opacidade 15%). Texto central em branco, fonte grande: <strong>"4 de julho."</strong> — linha abaixo, menor: <em>"Pra maioria é feriado. Pra quem tem empresa nos EUA, é um lembrete."</em> Logo KwikLedgers no rodapé, cor branca.</div>
+        </div>
+        <div class="inner-section">
+          <div class="inner-label">Legenda</div>
+          <div class="legenda-box">4 de julho. Independence Day.
+
+Para a maioria das pessoas, é um feriado americano. Para quem tem — ou quer ter — empresa nos EUA, é um lembrete poderoso.
+
+Os Estados Unidos são um dos países mais abertos do mundo para empreendedores estrangeiros. Você não precisa de visto. Não precisa morar lá. Não precisa de sócio americano.
+
+O que você precisa é de estrutura.
+
+Enquanto muitos brasileiros ainda acham que o mercado americano é distante, outros já faturam em dólar, recebem de clientes internacionais e protegem seu patrimônio com uma empresa bem estruturada nos EUA.
+
+A independência do seu negócio pode começar hoje.
+
+🇺🇸 Link na bio para dar o primeiro passo.
+
+#IndependenceDay #EmpresaNosEUA #LLC #KwikLedgers #EmpreendedorBrasileiro</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ========== SEMANA 2 ========== -->
+  <div id="semana2">
+    <div class="section-header">
+      <div class="section-title-text">Semana 2 — 7 a 11 jul</div>
+    </div>
+
+    <!-- POST S2-1 -->
+    <div class="post-block" id="post-s2-1">
+      <div class="post-block-header">
+        <div>
+          <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
+            <span class="badge badge-reel">Reel</span>
+            <span class="badge badge-obj-a">objeção · alcance</span>
+          </div>
+          <div class="post-block-title">Você precisa morar nos EUA para ter empresa lá?</div>
+          <div class="post-block-meta">07/jul (seg) · publicar 12h–13h · duração ideal 30–40s</div>
+        </div>
+      </div>
+      <div class="post-block-body">
+        <div class="inner-section">
+          <div class="inner-label">Roteiro — texto na tela + fala do apresentador</div>
+          <div class="reel-row">
+            <div class="reel-time">0–3s<br>Gancho</div>
+            <div>
+              <div class="reel-screen">TELA: "Você precisa morar nos EUA para ter empresa lá?"</div>
+              <div class="reel-talk">FALA: "Essa é a dúvida número 1 de todo brasileiro que pensa em expandir. E a resposta vai te surpreender."</div>
+            </div>
+          </div>
+          <div class="reel-row">
+            <div class="reel-time">3–15s<br>Resposta</div>
+            <div>
+              <div class="reel-screen">TELA: "Não. Você não precisa morar lá."</div>
+              <div class="reel-talk">FALA: "Qualquer estrangeiro pode abrir uma LLC nos Estados Unidos sem visto, sem precisar residir lá e sem sócio americano. O processo é 100% remoto."</div>
+            </div>
+          </div>
+          <div class="reel-row">
+            <div class="reel-time">15–28s<br>Detalhe</div>
+            <div>
+              <div class="reel-screen">TELA: "O que você precisa de verdade:"</div>
+              <div class="reel-talk">FALA: "Passaporte válido, endereço registrado nos EUA — que pode ser um registered agent — e um EIN, que é o CNPJ americano. Com isso, você já pode abrir conta e operar."</div>
+            </div>
+          </div>
+          <div class="reel-row">
+            <div class="reel-time">28–38s<br>CTA</div>
+            <div>
+              <div class="reel-screen">TELA: "Simples. Rápido. Sem sair do Brasil."</div>
+              <div class="reel-talk">FALA: "A KwikLedgers faz tudo isso por você. Link na bio — em 7 a 10 dias úteis sua empresa está aberta."</div>
+            </div>
+          </div>
+        </div>
+        <div class="inner-section">
+          <div class="inner-label">Legenda</div>
+          <div class="legenda-box">Você precisa morar nos EUA para ter empresa lá?
+
+Não.
+
+Qualquer estrangeiro pode abrir uma LLC nos Estados Unidos sem visto, sem precisar residir lá e sem sócio americano.
+
+O processo é 100% remoto. O que você precisa:
+
+→ Passaporte válido
+→ Registered agent (endereço legal nos EUA — a KwikLedgers cuida disso)
+→ EIN — o equivalente ao CNPJ americano
+
+Com isso, você já pode abrir conta bancária nos EUA, emitir invoices em dólar e operar legalmente.
+
+Muitos brasileiros ainda acreditam que o mercado americano é para quem mora lá. Não é.
+
+É para quem está estruturado.
+
+📲 Link na bio — em 7 a 10 dias úteis sua empresa nos EUA está aberta.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST S2-2 -->
+    <div class="post-block" id="post-s2-2">
+      <div class="post-block-header">
+        <div>
+          <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
+            <span class="badge badge-carr">Carrossel</span>
+            <span class="badge badge-obj-p">produto · confiança</span>
+          </div>
+          <div class="post-block-title">Como funciona o processo da KwikLedgers — do zero à empresa aberta</div>
+          <div class="post-block-meta">08/jul (ter) · publicar 17h–19h · 7 slides</div>
+        </div>
+      </div>
+      <div class="post-block-body">
+        <div class="inner-section">
+          <div class="inner-label">Copy de cada slide</div>
+          <div class="slide-row"><div class="slide-num">1</div><div><div class="slide-art">ARTE: "Do zero à empresa aberta nos EUA em 7 a 10 dias úteis." — tipografia grande, fundo escuro.</div><div class="slide-copy">Subtítulo: "Veja como funciona o processo na prática."</div></div></div>
+          <div class="slide-row"><div class="slide-num">2</div><div><div class="slide-art">ARTE: Passo 1 — ícone de formulário. Título: "Você preenche o formulário"</div><div class="slide-copy">Texto: "Tudo online, em menos de 10 minutos. Informamos quais dados precisamos — sem burocracia e sem jargão jurídico."</div></div></div>
+          <div class="slide-row"><div class="slide-num">3</div><div><div class="slide-art">ARTE: Passo 2 — ícone de engrenagem. Título: "A KwikLedgers cuida de tudo"</div><div class="slide-copy">Texto: "Preparamos os documentos, protocolamos junto ao estado escolhido (Florida ou Delaware) e acompanhamos todo o processo. Você não precisa fazer nada além de aguardar."</div></div></div>
+          <div class="slide-row"><div class="slide-num">4</div><div><div class="slide-art">ARTE: Passo 3 — ícone de documento aprovado. Título: "Empresa registrada"</div><div class="slide-copy">Texto: "Em 7 a 10 dias úteis após o envio dos documentos, sua LLC já está registrada. Você recebe os documentos oficiais para abrir conta bancária e começar a operar."</div></div></div>
+          <div class="slide-row"><div class="slide-num">5</div><div><div class="slide-art">ARTE: Passo 4 — ícone de suporte. Título: "Suporte contínuo"</div><div class="slide-copy">Texto: "Não acabou na abertura. A KwikLedgers fica ao seu lado para manter a empresa em dia: relatórios anuais, obrigações fiscais e suporte sempre que precisar."</div></div></div>
+          <div class="slide-row"><div class="slide-num">6</div><div><div class="slide-art">ARTE: Dados do serviço — visual limpo com 3 números em destaque.</div><div class="slide-copy">• R$ 650 pagamento único<br>• 7 a 10 dias úteis após envio dos documentos<br>• Florida ou Delaware — você escolhe</div></div></div>
+          <div class="slide-row"><div class="slide-num">7</div><div><div class="slide-art">ARTE: CTA — "Pronto para começar?" + logo KwikLedgers + destaque laranja.</div><div class="slide-copy">Texto: "Acesse o link na bio e dê o primeiro passo hoje."</div></div></div>
+        </div>
+        <div class="inner-section">
+          <div class="inner-label">Legenda</div>
+          <div class="legenda-box">Muita gente adia a abertura de empresa nos EUA por achar que é complicado.
+
+Na prática, com a estrutura certa, o processo é mais simples do que parece.
+
+Com a KwikLedgers, funciona assim:
+
+1. Você preenche um formulário online — menos de 10 minutos
+2. A gente cuida de toda a documentação e protocolamento
+3. Em 7 a 10 dias úteis após o envio dos documentos, sua empresa está aberta
+4. Você recebe os documentos para abrir conta bancária e operar
+
+Tudo remoto. Sem precisar de visto ou morar nos EUA.
+
+Por R$ 650 em pagamento único, sua LLC já está registrada em Florida ou Delaware.
+
+Desliza para ver o passo a passo completo.
+
+📲 Link na bio para começar hoje.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST S2-3 -->
+    <div class="post-block" id="post-s2-3">
+      <div class="post-block-header">
+        <div>
+          <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
+            <span class="badge badge-carr">Carrossel</span>
+            <span class="badge badge-top">Alta prioridade</span>
+            <span class="badge badge-obj-c">prova social · conversão</span>
+          </div>
+          <div class="post-block-title">Case real: como um empresário brasileiro abriu LLC e passou a faturar em dólar</div>
+          <div class="post-block-meta">10/jul (qui) · publicar 17h–19h · 8 slides · perfil fictício realista</div>
+        </div>
+      </div>
+      <div class="post-block-body">
+        <div class="inner-section">
+          <div class="alert alert-i">Perfil fictício: Ricardo M., 42 anos, consultor de marketing digital, São Paulo. Atenção: adaptar com case real quando disponível.</div>
+          <div class="inner-label">Copy de cada slide</div>
+          <div class="slide-row"><div class="slide-num">1</div><div><div class="slide-art">ARTE: Frase de impacto em destaque, fundo escuro.</div><div class="slide-copy">"Em 3 meses, passei a receber 40% do meu faturamento em dólar. Veja o que mudou."</div></div></div>
+          <div class="slide-row"><div class="slide-num">2</div><div><div class="slide-art">ARTE: Perfil do cliente — ícone de pessoa + dados.</div><div class="slide-copy">Quem: Ricardo, consultor de marketing digital, São Paulo.<br>Situação: atendia clientes internacionais pelo PayPal pessoal, sem estrutura jurídica, sem contrato formal, sem proteção patrimonial.</div></div></div>
+          <div class="slide-row"><div class="slide-num">3</div><div><div class="slide-art">ARTE: "O problema" — ícone de alerta, cor âmbar.</div><div class="slide-copy">Texto: "Sem empresa nos EUA, Ricardo perdia clientes que exigiam invoice formal, pagava taxas de câmbio altas e não tinha como separar o patrimônio pessoal do risco do negócio."</div></div></div>
+          <div class="slide-row"><div class="slide-num">4</div><div><div class="slide-art">ARTE: "A decisão" — linha do tempo simples.</div><div class="slide-copy">Texto: "Em janeiro de 2026, Ricardo procurou a KwikLedgers. Em menos de 2 semanas, a LLC estava aberta em Florida. Conta bancária nos EUA: ativa em 30 dias."</div></div></div>
+          <div class="slide-row"><div class="slide-num">5</div><div><div class="slide-art">ARTE: "O que mudou" — lista com ícones verdes.</div><div class="slide-copy">• Passou a emitir invoices oficiais para clientes nos EUA e Europa<br>• Abriu conta bancária americana para recebimentos diretos<br>• Eliminou taxas de câmbio de intermediários<br>• Separou patrimônio pessoal do negócio</div></div></div>
+          <div class="slide-row"><div class="slide-num">6</div><div><div class="slide-art">ARTE: Número de destaque em verde — dado concreto.</div><div class="slide-copy">Em 90 dias: 40% do faturamento convertido para recebimento direto em dólar. Dois novos clientes internacionais fechados — que antes exigiam estrutura legal que ele não tinha.</div></div></div>
+          <div class="slide-row"><div class="slide-num">7</div><div><div class="slide-art">ARTE: Frase de depoimento — aspas grandes, fundo neutro.</div><div class="slide-copy">"Eu já pensava nisso há 2 anos. O que me travava era achar que era complicado e caro. Não é nenhum dos dois." — Ricardo M., consultor de marketing digital.</div></div></div>
+          <div class="slide-row"><div class="slide-num">8</div><div><div class="slide-art">ARTE: CTA — logo KwikLedgers + destaque laranja.</div><div class="slide-copy">"Sua história pode ser a próxima. Diagnóstico gratuito — link na bio."</div></div></div>
+        </div>
+        <div class="inner-section">
+          <div class="inner-label">Legenda</div>
+          <div class="legenda-box">Ricardo é consultor de marketing digital. Atendia clientes nos EUA e na Europa há anos.
+
+Mas fazia tudo pelo PayPal pessoal, sem invoice formal, sem estrutura jurídica, sem proteção.
+
+Perdia contratos. Pagava taxas desnecessárias. E sabia que estava exposto.
+
+Em janeiro de 2026, ele abriu uma LLC em Florida com a KwikLedgers.
+
+Em menos de 2 semanas: empresa registrada.
+Em 30 dias: conta bancária americana ativa.
+Em 90 dias: 40% do faturamento convertido para recebimento direto em dólar.
+
+Dois clientes novos fechados — que antes exigiam estrutura legal que ele não tinha.
+
+"Eu já pensava nisso há 2 anos. O que me travava era achar que era complicado e caro. Não é nenhum dos dois."
+
+Se você também atendia clientes internacionais sem estrutura, esse post é pra você.
+
+📲 Link na bio — diagnóstico gratuito para entender qual estrutura faz sentido para o seu negócio.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST S2-4 -->
+    <div class="post-block" id="post-s2-4">
+      <div class="post-block-header">
+        <div>
+          <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
+            <span class="badge badge-reel">Reel</span>
+            <span class="badge badge-obj-a">Copa · alcance</span>
+          </div>
+          <div class="post-block-title">Copa nos EUA: 3 obrigações fiscais que a maioria dos empresários ignora</div>
+          <div class="post-block-meta">11/jul (sex) · publicar 12h–13h · duração ideal 40–50s</div>
+        </div>
+      </div>
+      <div class="post-block-body">
+        <div class="inner-section">
+          <div class="inner-label">Roteiro — texto na tela + fala do apresentador</div>
+          <div class="reel-row">
+            <div class="reel-time">0–3s<br>Gancho</div>
+            <div>
+              <div class="reel-screen">TELA: "Vai para os EUA na Copa? Cuidado com isso."</div>
+              <div class="reel-talk">FALA: "A Copa vai levar milhares de empresários brasileiros para os EUA. Mas tem três armadilhas fiscais que quase ninguém conhece."</div>
+            </div>
+          </div>
+          <div class="reel-row">
+            <div class="reel-time">3–17s<br>Ponto 1</div>
+            <div>
+              <div class="reel-screen">TELA: "#1 — Tempo de permanência nos EUA"</div>
+              <div class="reel-talk">FALA: "Se você passa mais de 183 dias nos EUA em um período de 3 anos, pode ser enquadrado como residente fiscal americano. Isso significa obrigações tributárias nos dois países."</div>
+            </div>
+          </div>
+          <div class="reel-row">
+            <div class="reel-time">17–30s<br>Ponto 2</div>
+            <div>
+              <div class="reel-screen">TELA: "#2 — Reuniões e negócios durante a viagem"</div>
+              <div class="reel-talk">FALA: "Fechar negócio ou assinar contrato durante a estadia nos EUA pode caracterizar atividade comercial. Com visto de turismo, isso gera irregularidade."</div>
+            </div>
+          </div>
+          <div class="reel-row">
+            <div class="reel-time">30–43s<br>Ponto 3</div>
+            <div>
+              <div class="reel-screen">TELA: "#3 — Movimentação financeira não declarada"</div>
+              <div class="reel-talk">FALA: "Levar ou movimentar valores acima de 10 mil dólares sem declarar gera multa automática. E isso inclui transferências entre contas suas."</div>
+            </div>
+          </div>
+          <div class="reel-row">
+            <div class="reel-time">43–50s<br>CTA</div>
+            <div>
+              <div class="reel-screen">TELA: "Vai aproveitar a Copa com inteligência?"</div>
+              <div class="reel-talk">FALA: "A KwikLedgers ajuda você a estruturar sua entrada nos EUA do jeito certo. Link na bio."</div>
+            </div>
+          </div>
+        </div>
+        <div class="inner-section">
+          <div class="inner-label">Legenda</div>
+          <div class="legenda-box">Vai para os EUA na Copa? Então lê isso antes.
+
+A viagem pode ser incrível. Mas se você vai a negócios — ou pretende aproveitar para prospectar clientes e fechar contratos — existem três pontos que você precisa conhecer antes de embarcar.
+
+#1 — Tempo de permanência
+Mais de 183 dias nos EUA ao longo de 3 anos pode enquadrar você como residente fiscal americano. Isso significa obrigações tributárias nos dois países.
+
+#2 — Reuniões e atividade comercial
+Visto de turismo não autoriza atividade comercial. Reuniões, negociações e contratos durante a estadia podem caracterizar irregularidade migratória e fiscal.
+
+#3 — Movimentação financeira acima de US$10k
+Qualquer movimentação acima desse valor precisa ser declarada. Isso inclui transferências entre contas próprias.
+
+Não é para assustar. É para você chegar preparado.
+
+Quem tem empresa bem estruturada nos EUA entra com muito mais segurança — e aproveita a viagem para gerar negócio de verdade.
+
+📲 Link na bio — fale com a KwikLedgers antes de embarcar.
+
+#Copa2026 #EmpresaNosEUA #LLC #EmpreendedorBrasileiro #KwikLedgers</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ========== SEMANA 3 ========== -->
+  <div id="semana3">
+    <div class="section-header">
+      <div class="section-title-text">Semana 3 — 14 a 18 jul</div>
+    </div>
+
+    <!-- POST S3-1 -->
+    <div class="post-block" id="post-s3-1">
+      <div class="post-block-header">
+        <div>
+          <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
+            <span class="badge badge-carr">Carrossel</span>
+            <span class="badge badge-top">Alta prioridade</span>
+            <span class="badge badge-obj-s">saves · público 45–54</span>
+          </div>
+          <div class="post-block-title">Holding internacional — como proteger seu patrimônio pelos EUA</div>
+          <div class="post-block-meta">14/jul (seg) · publicar 17h–19h · 8 slides</div>
+        </div>
+      </div>
+      <div class="post-block-body">
+        <div class="inner-section">
+          <div class="inner-label">Copy de cada slide</div>
+          <div class="slide-row"><div class="slide-num">1</div><div><div class="slide-art">ARTE: Título impactante, fundo escuro, tipografia grande.</div><div class="slide-copy">"Os empresários que mais protegem seu patrimônio têm uma coisa em comum: uma estrutura nos EUA."</div></div></div>
+          <div class="slide-row"><div class="slide-num">2</div><div><div class="slide-art">ARTE: Título "O que é uma holding internacional?" — ícone de escudo.</div><div class="slide-copy">Texto: "É uma estrutura onde uma empresa (geralmente nos EUA) detém participação em outras empresas ou ativos. Ela centraliza o controle, protege o patrimônio e facilita o planejamento sucessório."</div></div></div>
+          <div class="slide-row"><div class="slide-num">3</div><div><div class="slide-art">ARTE: Título "Por que os EUA?" — ícone de globo.</div><div class="slide-copy">Texto: "Segurança jurídica consolidada. Moeda forte. Sistema bancário robusto. Proteção patrimonial efetiva contra riscos do Brasil: processos, instabilidade econômica e mudanças tributárias."</div></div></div>
+          <div class="slide-row"><div class="slide-num">4</div><div><div class="slide-art">ARTE: "Para quem faz sentido?" — lista com ícones.</div><div class="slide-copy">• Empresários com patrimônio acima de R$2M<br>• Quem tem negócios em mais de um país<br>• Quem planeja sucessão familiar<br>• Quem quer separar riscos operacionais do patrimônio pessoal<br>• Quem investe no exterior ou pretende começar</div></div></div>
+          <div class="slide-row"><div class="slide-num">5</div><div><div class="slide-art">ARTE: "Como funciona na prática?" — diagrama simples de estrutura.</div><div class="slide-copy">Estrutura típica: Holding (LLC ou C-Corp nos EUA) → detém participação em empresa operacional no Brasil → patrimônio pessoal protegido fora da operação. Lucros podem ser acumulados na holding americana antes de distribuição.</div></div></div>
+          <div class="slide-row"><div class="slide-num">6</div><div><div class="slide-art">ARTE: "Benefícios concretos" — lista em verde.</div><div class="slide-copy">• Proteção patrimonial: ativos nos EUA ficam fora do alcance de credores no Brasil<br>• Planejamento sucessório: transferência de participação sem inventário<br>• Acesso a crédito internacional<br>• Recebimento de dividendos em dólar</div></div></div>
+          <div class="slide-row"><div class="slide-num">7</div><div><div class="slide-art">ARTE: "Atenção" — ícone de alerta, fundo âmbar claro.</div><div class="slide-copy">Texto: "Holding internacional precisa de planejamento tributário internacional adequado. Estrutura mal feita pode gerar dupla tributação. A KwikLedgers trabalha com visão contábil, tributária e jurídica integrada."</div></div></div>
+          <div class="slide-row"><div class="slide-num">8</div><div><div class="slide-art">ARTE: CTA — logo KwikLedgers, destaque laranja.</div><div class="slide-copy">"Quer avaliar se uma holding internacional faz sentido para o seu patrimônio? Chama no direct — primeira conversa é gratuita."</div></div></div>
+        </div>
+        <div class="inner-section">
+          <div class="inner-label">Legenda</div>
+          <div class="legenda-box">Proteção patrimonial não é assunto só para grandes corporações.
+
+Empresários brasileiros com negócios consolidados já usam estruturas nos EUA para proteger o que construíram — e planejar o que deixarão para os filhos.
+
+Isso se chama holding internacional.
+
+Na prática: uma empresa nos EUA que detém participação nos seus negócios ou ativos. Ela separa o que é seu do que é da operação. E coloca parte do seu patrimônio em um ambiente juridicamente mais estável.
+
+Os benefícios são concretos:
+→ Proteção contra riscos do ambiente de negócios no Brasil
+→ Planejamento sucessório sem inventário
+→ Acesso a crédito internacional
+→ Recebimento de dividendos em dólar
+
+Não é um esquema. É estrutura.
+
+A diferença entre quem acumula patrimônio com segurança e quem fica exposto ao risco está, muitas vezes, na forma como organizou sua empresa.
+
+💾 Salva esse post — e chama no direct se quiser avaliar se essa estrutura faz sentido para o seu caso.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST S3-2 -->
+    <div class="post-block" id="post-s3-2">
+      <div class="post-block-header">
+        <div>
+          <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
+            <span class="badge badge-reel">Reel</span>
+            <span class="badge badge-obj-a">objeção · alcance</span>
+          </div>
+          <div class="post-block-title">Quanto custa manter uma LLC nos EUA por ano?</div>
+          <div class="post-block-meta">16/jul (qua) · publicar 12h–13h · duração ideal 35–45s</div>
+        </div>
+      </div>
+      <div class="post-block-body">
+        <div class="inner-section">
+          <div class="inner-label">Roteiro — texto na tela + fala do apresentador</div>
+          <div class="reel-row"><div class="reel-time">0–3s<br>Gancho</div><div><div class="reel-screen">TELA: "Quanto custa manter uma LLC nos EUA por ano?"</div><div class="reel-talk">FALA: "Essa é a segunda dúvida mais comum — e a resposta é mais simples do que você imagina."</div></div></div>
+          <div class="reel-row"><div class="reel-time">3–18s<br>Custos</div><div><div class="reel-screen">TELA: "Os custos principais:"</div><div class="reel-talk">FALA: "Registered agent — que é o endereço legal da empresa nos EUA — custa entre 100 e 150 dólares por ano. O Annual Report, que é a renovação anual no estado, varia: na Florida são 138 dólares. Em Delaware, 300 dólares. E dependendo do faturamento, pode ter obrigações de imposto de renda no nível federal ou estadual."</div></div></div>
+          <div class="reel-row"><div class="reel-time">18–30s<br>Contexto</div><div><div class="reel-screen">TELA: "No total: entre US$250 e US$500 por ano para manter a estrutura básica"</div><div class="reel-talk">FALA: "Para um negócio que fatura em dólar, isso é residual. O custo de não ter estrutura — em impostos, taxas e oportunidades perdidas — costuma ser muito maior."</div></div></div>
+          <div class="reel-row"><div class="reel-time">30–42s<br>CTA</div><div><div class="reel-screen">TELA: "Quer saber o custo exato para o seu caso?"</div><div class="reel-talk">FALA: "Cada negócio tem uma estrutura diferente. Link na bio para falar com a KwikLedgers e entender o que faz sentido para você."</div></div></div>
+        </div>
+        <div class="inner-section">
+          <div class="inner-label">Legenda</div>
+          <div class="legenda-box">Quanto custa manter uma LLC nos EUA por ano?
+
+É menos do que a maioria imagina.
+
+Os custos básicos:
+
+→ Registered agent (endereço legal): US$100–150/ano
+→ Annual Report (renovação no estado):
+   • Florida: US$138
+   • Delaware: US$300
+→ Eventuais obrigações fiscais: depende do faturamento e estrutura
+
+Total para manter a estrutura básica ativa: entre US$250 e US$500 por ano.
+
+Para quem fatura em dólar ou tem clientes internacionais, esse valor é residual.
+
+O que realmente custa caro é não ter estrutura: pagar taxas de câmbio de intermediários, perder contratos por falta de invoice formal, e ficar exposto sem separação patrimonial.
+
+Quer saber o custo exato para o seu modelo de negócio?
+
+📲 Link na bio — diagnóstico gratuito com a KwikLedgers.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST S3-3 -->
+    <div class="post-block" id="post-s3-3">
+      <div class="post-block-header">
+        <div>
+          <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
+            <span class="badge badge-carr">Carrossel</span>
+            <span class="badge badge-top">Alta prioridade</span>
+            <span class="badge badge-obj-s">fiscal · urgência · saves</span>
+          </div>
+          <div class="post-block-title">Receita Federal e LLC: o que mudou e o que você precisa fazer agora</div>
+          <div class="post-block-meta">17/jul (qui) · publicar 17h–19h · 7 slides</div>
+        </div>
+      </div>
+      <div class="post-block-body">
+        <div class="inner-section">
+          <div class="inner-label">Copy de cada slide</div>
+          <div class="slide-row"><div class="slide-num">1</div><div><div class="slide-art">ARTE: Fundo escuro, texto de alerta em destaque.</div><div class="slide-copy">"A Receita Federal se pronunciou sobre LLC. Mas o que isso muda para você depende de como sua estrutura está montada."</div></div></div>
+          <div class="slide-row"><div class="slide-num">2</div><div><div class="slide-art">ARTE: "O que mudou?" — ícone de documento oficial.</div><div class="slide-copy">Texto: "A RF passou a exigir que lucros mantidos em LLC no exterior sejam reconhecidos anualmente na declaração de IRPF do sócio brasileiro, mesmo sem distribuição. A regra não cria imposto novo — ela muda o momento da tributação."</div></div></div>
+          <div class="slide-row"><div class="slide-num">3</div><div><div class="slide-art">ARTE: "Cenário 1 — LLC bem estruturada e declarada" — ícone verde.</div><div class="slide-copy">Texto: "Para quem já declarava os lucros corretamente, o impacto é mínimo. Os impostos pagos nos EUA podem ser aproveitados como crédito no Brasil, evitando dupla tributação econômica."</div></div></div>
+          <div class="slide-row"><div class="slide-num">4</div><div><div class="slide-art">ARTE: "Cenário 2 — LLC aberta mas não declarada no Brasil" — ícone âmbar.</div><div class="slide-copy">Texto: "Esse é o caso de maior risco. Lucros não declarados geram exposição fiscal relevante. Se você tem uma LLC e nunca declarou na RF brasileira, o momento de regularizar é agora — antes de uma autuação."</div></div></div>
+          <div class="slide-row"><div class="slide-num">5</div><div><div class="slide-art">ARTE: "Cenário 3 — LLC com estrutura planejada" — ícone azul.</div><div class="slide-copy">Texto: "Quem tem uma holding internacional ou planejamento tributário adequado pode usar os créditos de imposto pago nos EUA e estruturar a distribuição de lucros de forma eficiente. A estrutura faz toda a diferença."</div></div></div>
+          <div class="slide-row"><div class="slide-num">6</div><div><div class="slide-art">ARTE: "O que fazer agora?" — checklist visual.</div><div class="slide-copy">✓ Verifique se sua LLC está declarada no IRPF brasileiro<br>✓ Confira se os lucros do exterior foram informados corretamente<br>✓ Avalie se sua estrutura permite uso de crédito de imposto pago no exterior<br>✓ Se tiver dúvida, busque assessoria especializada antes da próxima declaração</div></div></div>
+          <div class="slide-row"><div class="slide-num">7</div><div><div class="slide-art">ARTE: CTA — logo KwikLedgers + destaque laranja.</div><div class="slide-copy">"Comenta REVISÃO abaixo ou chama no direct. A KwikLedgers avalia sua estrutura e indica o próximo passo."</div></div></div>
+        </div>
+        <div class="inner-section">
+          <div class="inner-label">Legenda</div>
+          <div class="legenda-box">A Receita Federal se pronunciou sobre LLC com sócios brasileiros.
+
+E muita gente ficou com dúvida sobre o que isso muda na prática.
+
+A resposta: depende de como sua estrutura está montada.
+
+Para quem já declarava os lucros corretamente no IRPF: o impacto é pequeno. Os impostos pagos nos EUA podem ser usados como crédito no Brasil.
+
+Para quem tem LLC aberta mas nunca declarou no Brasil: esse é o cenário de maior risco. Regularizar agora é muito menos custoso do que enfrentar uma autuação depois.
+
+Para quem tem estrutura planejada com visão tributária internacional: a regra confirma o que já estava sendo feito — e quem tem planejamento adequado sai na frente.
+
+A regra não é o problema. Estrutura mal feita ou não declarada é o problema.
+
+Desliza para entender os 3 cenários na prática.
+
+💾 Salva esse post — e comenta REVISÃO se quiser que a gente avalie a sua situação.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST S3-4 -->
+    <div class="post-block" id="post-s3-4">
+      <div class="post-block-header">
+        <div>
+          <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
+            <span class="badge badge-img">Imagem</span>
+            <span class="badge badge-obj-p">humanização · confiança</span>
+          </div>
+          <div class="post-block-title">Bastidores KwikLedgers — equipe e missão</div>
+          <div class="post-block-meta">18/jul (sex) · publicar 14h–16h · 1 imagem (foto real da equipe)</div>
+        </div>
+      </div>
+      <div class="post-block-body">
+        <div class="inner-section">
+          <div class="inner-label">Arte — o que vai na imagem</div>
+          <div class="arte-box">Foto real da equipe KwikLedgers — ambiente de trabalho, tom natural, não posado demais. Sobreposição leve com texto: <strong>"As pessoas por trás da sua expansão."</strong> Logo KwikLedgers discreto no canto.</div>
+        </div>
+        <div class="inner-section">
+          <div class="inner-label">Legenda</div>
+          <div class="legenda-box">Por trás de cada empresa aberta nos EUA, tem uma equipe que entende o que está em jogo.
+
+Na KwikLedgers, trabalhamos com empresários brasileiros que estão dando um passo importante nas suas vidas: estruturar um negócio em outro país, faturar em dólar, proteger o que construíram.
+
+Isso exige mais do que processo. Exige cuidado com os detalhes, clareza na comunicação e compromisso com o resultado.
+
+É isso que a gente faz todos os dias.
+
+Se você está pensando em expandir para os EUA — seja para abrir uma LLC, estruturar uma holding ou entender suas obrigações fiscais — a gente está aqui.
+
+📲 Link na bio para conversar com a equipe.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ========== SEMANA 4 ========== -->
+  <div id="semana4">
+    <div class="section-header">
+      <div class="section-title-text">Semana 4 — 21 a 25 jul</div>
+    </div>
+
+    <!-- POST S4-1 -->
+    <div class="post-block" id="post-s4-1">
+      <div class="post-block-header">
+        <div>
+          <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
+            <span class="badge badge-carr">Carrossel</span>
+            <span class="badge badge-obj-a">objeção · qualificação</span>
+          </div>
+          <div class="post-block-title">Meu negócio é pequeno demais para ter empresa nos EUA?</div>
+          <div class="post-block-meta">21/jul (seg) · publicar 17h–19h · 7 slides</div>
+        </div>
+      </div>
+      <div class="post-block-body">
+        <div class="inner-section">
+          <div class="inner-label">Copy de cada slide</div>
+          <div class="slide-row"><div class="slide-num">1</div><div><div class="slide-art">ARTE: Pergunta em destaque, fundo claro.</div><div class="slide-copy">"Meu negócio é pequeno demais para ter empresa nos EUA?" — Desliza para a resposta honesta.</div></div></div>
+          <div class="slide-row"><div class="slide-num">2</div><div><div class="slide-art">ARTE: Resposta direta — fonte grande, fundo escuro.</div><div class="slide-copy">"Provavelmente não. O tamanho do negócio não é o critério mais importante."</div></div></div>
+          <div class="slide-row"><div class="slide-num">3</div><div><div class="slide-art">ARTE: "Faz sentido para você se..." — lista em verde.</div><div class="slide-copy">• Você atende ou quer atender clientes fora do Brasil<br>• Recebe ou quer receber em dólar ou euro<br>• Trabalha com produtos ou serviços digitais<br>• Quer separar patrimônio pessoal do negócio<br>• Planeja acessar ferramentas e crédito internacionais</div></div></div>
+          <div class="slide-row"><div class="slide-num">4</div><div><div class="slide-art">ARTE: "Pode não fazer sentido se..." — lista em âmbar.</div><div class="slide-copy">• Seu negócio opera 100% no Brasil, em reais, sem perspectiva de internacionalização<br>• Você não tem volume de receita para absorver os custos de manutenção<br>• Não há planejamento claro de uso da estrutura americana</div></div></div>
+          <div class="slide-row"><div class="slide-num">5</div><div><div class="slide-art">ARTE: Exemplo real — ícone de pessoa, fundo neutro.</div><div class="slide-copy">Texto: "Um freelancer brasileiro que fatura US$2.000/mês para um cliente americano já tem motivo mais do que suficiente para ter uma LLC. Sem estrutura, ele paga mais imposto, tem mais risco e menos credibilidade."</div></div></div>
+          <div class="slide-row"><div class="slide-num">6</div><div><div class="slide-art">ARTE: Frase de destaque.</div><div class="slide-copy">"A pergunta certa não é 'meu negócio é grande o suficiente?'. É 'meu negócio vai se beneficiar de operar nos EUA?'"</div></div></div>
+          <div class="slide-row"><div class="slide-num">7</div><div><div class="slide-art">ARTE: CTA — logo KwikLedgers.</div><div class="slide-copy">"Quer entender se faz sentido para o seu caso? Diagnóstico gratuito — link na bio."</div></div></div>
+        </div>
+        <div class="inner-section">
+          <div class="inner-label">Legenda</div>
+          <div class="legenda-box">"Meu negócio é pequeno demais para ter empresa nos EUA?"
+
+Essa dúvida aparece muito — e a resposta costuma surpreender.
+
+Tamanho não é o critério. O critério é: sua operação se beneficia de ter estrutura nos EUA?
+
+Se você atende clientes internacionais, recebe em dólar, vende produto digital para fora do Brasil ou quer se proteger patrimonialmente — provavelmente sim.
+
+Um freelancer que fatura US$2.000/mês para um cliente americano já tem motivo mais do que suficiente. Sem LLC, ele paga mais imposto, tem mais risco e transmite menos credibilidade.
+
+A pergunta certa não é "sou grande o suficiente?". É "meu negócio vai crescer melhor com essa estrutura?"
+
+Desliza para entender quando faz — e quando não faz — sentido.
+
+📲 Dúvida sobre o seu caso? Link na bio — diagnóstico gratuito.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST S4-2 -->
+    <div class="post-block" id="post-s4-2">
+      <div class="post-block-header">
+        <div>
+          <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
+            <span class="badge badge-reel">Reel</span>
+            <span class="badge badge-obj-a">alcance · viralidade</span>
+          </div>
+          <div class="post-block-title">A pergunta errada que todo brasileiro faz antes de abrir LLC</div>
+          <div class="post-block-meta">22/jul (ter) · publicar 12h–13h · duração ideal 30–40s</div>
+        </div>
+      </div>
+      <div class="post-block-body">
+        <div class="inner-section">
+          <div class="inner-label">Roteiro — texto na tela + fala do apresentador</div>
+          <div class="reel-row"><div class="reel-time">0–3s<br>Gancho</div><div><div class="reel-screen">TELA: "A pergunta que todo brasileiro faz — e que está errada."</div><div class="reel-talk">FALA: "Quando um empresário brasileiro me procura querendo abrir empresa nos EUA, a primeira pergunta é quase sempre a mesma. E ela está errada."</div></div></div>
+          <div class="reel-row"><div class="reel-time">3–12s<br>A pergunta errada</div><div><div class="reel-screen">TELA: "❌ 'Vou pagar menos imposto?'"</div><div class="reel-talk">FALA: "Essa é a pergunta errada. Não porque seja irrelevante — mas porque ela coloca o foco no lugar errado. E quem começa por aí costuma montar uma estrutura mal feita."</div></div></div>
+          <div class="reel-row"><div class="reel-time">12–25s<br>A pergunta certa</div><div><div class="reel-screen">TELA: "✓ 'Qual estrutura serve melhor para o meu modelo de negócio?'"</div><div class="reel-talk">FALA: "Essa é a pergunta certa. A estrutura nos EUA pode te dar acesso a mercado global, proteção patrimonial, credibilidade com clientes internacionais, separação de risco. Imposto é consequência de uma boa estrutura — não o objetivo."</div></div></div>
+          <div class="reel-row"><div class="reel-time">25–38s<br>CTA</div><div><div class="reel-screen">TELA: "Começa pela pergunta certa."</div><div class="reel-talk">FALA: "Link na bio para entender qual estrutura faz sentido para o seu negócio — sem achismo."</div></div></div>
+        </div>
+        <div class="inner-section">
+          <div class="inner-label">Legenda</div>
+          <div class="legenda-box">Existe uma pergunta que quase todo empresário brasileiro faz antes de abrir LLC nos EUA.
+
+E ela está errada.
+
+❌ "Vou pagar menos imposto?"
+
+Não é uma pergunta ruim. Mas quando ela vem primeiro, a estrutura costuma sair errada.
+
+Quem monta empresa nos EUA pensando só em carga tributária geralmente ignora o que realmente importa: modelo de operação, obrigações nos dois países, separação patrimonial, compliance.
+
+A pergunta certa é:
+
+✓ "Qual estrutura serve melhor para o meu modelo de negócio?"
+
+A resposta para essa pergunta inclui imposto — mas também inclui acesso a mercado, proteção, credibilidade e sustentabilidade da operação.
+
+Imposto é consequência de uma boa estrutura. Não o objetivo.
+
+📲 Link na bio — fala com a KwikLedgers e começa pela pergunta certa.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST S4-3 -->
+    <div class="post-block" id="post-s4-3">
+      <div class="post-block-header">
+        <div>
+          <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
+            <span class="badge badge-carr">Carrossel</span>
+            <span class="badge badge-top">Alta prioridade</span>
+            <span class="badge badge-obj-c">prova social · saves</span>
+          </div>
+          <div class="post-block-title">Case real #2: holding nos EUA para proteção patrimonial</div>
+          <div class="post-block-meta">24/jul (qui) · publicar 17h–19h · 8 slides · perfil fictício realista</div>
+        </div>
+      </div>
+      <div class="post-block-body">
+        <div class="inner-section">
+          <div class="alert alert-i">Perfil fictício: Fernando A., 51 anos, empresário do setor de construção civil, Belo Horizonte. Adaptar com case real quando disponível.</div>
+          <div class="inner-label">Copy de cada slide</div>
+          <div class="slide-row"><div class="slide-num">1</div><div><div class="slide-art">ARTE: Frase de impacto, fundo escuro.</div><div class="slide-copy">"Ele tinha R$4M em patrimônio e nada protegido. Veja o que mudou com uma estrutura nos EUA."</div></div></div>
+          <div class="slide-row"><div class="slide-num">2</div><div><div class="slide-art">ARTE: Perfil do cliente.</div><div class="slide-copy">Fernando, 51 anos. Empresário com construtora no Brasil há 20 anos. Patrimônio acumulado: imóveis, participações societárias, aplicações financeiras. Problema: tudo estava misturado — nome pessoal, empresa operacional, sem separação de risco.</div></div></div>
+          <div class="slide-row"><div class="slide-num">3</div><div><div class="slide-art">ARTE: "O risco" — ícone de alerta âmbar.</div><div class="slide-copy">Texto: "Em 2025, Fernando enfrentou um processo trabalhista de grande valor. Percebeu que, sem separação patrimonial adequada, seu patrimônio pessoal estava exposto. A construtora e o patrimônio eram praticamente a mesma coisa."</div></div></div>
+          <div class="slide-row"><div class="slide-num">4</div><div><div class="slide-art">ARTE: "A solução" — ícone de escudo verde.</div><div class="slide-copy">Texto: "Com a KwikLedgers, Fernando estruturou uma LLC em Delaware como holding. As participações societárias e parte dos investimentos foram reorganizados para ficarem sob a holding americana, separados da operação no Brasil."</div></div></div>
+          <div class="slide-row"><div class="slide-num">5</div><div><div class="slide-art">ARTE: Diagrama de estrutura — visual simples.</div><div class="slide-copy">Fernando (pessoa física) → LLC Delaware (holding) → Construtora Brasil + Investimentos. Resultado: patrimônio pessoal separado da exposição operacional.</div></div></div>
+          <div class="slide-row"><div class="slide-num">6</div><div><div class="slide-art">ARTE: "O que mudou" — lista em verde.</div><div class="slide-copy">• Patrimônio reorganizado com separação de risco real<br>• Planejamento sucessório estruturado para os filhos<br>• Parte dos investimentos em conta bancária americana<br>• Visão clara do patrimônio total e sua proteção</div></div></div>
+          <div class="slide-row"><div class="slide-num">7</div><div><div class="slide-art">ARTE: Depoimento — aspas grandes.</div><div class="slide-copy">"Passei 20 anos construindo patrimônio sem pensar em como protegê-lo. A holding nos EUA foi a decisão mais importante que tomei nos últimos 5 anos." — Fernando A., empresário, BH.</div></div></div>
+          <div class="slide-row"><div class="slide-num">8</div><div><div class="slide-art">ARTE: CTA — logo KwikLedgers.</div><div class="slide-copy">"Quer avaliar sua situação patrimonial? Primeira conversa é gratuita. Link na bio."</div></div></div>
+        </div>
+        <div class="inner-section">
+          <div class="inner-label">Legenda</div>
+          <div class="legenda-box">Fernando tem 51 anos e passou 20 construindo um patrimônio sólido no setor de construção civil.
+
+Imóveis, participações societárias, aplicações. Mas tudo misturado — nome pessoal, empresa operacional, sem separação real de risco.
+
+Em 2025, um processo trabalhista de grande valor fez ele perceber o quanto estava exposto.
+
+A solução foi uma holding nos EUA.
+
+Com a KwikLedgers, Fernando estruturou uma LLC em Delaware. Participações societárias e parte dos investimentos foram reorganizados para ficarem sob a holding — separados da operação da construtora no Brasil.
+
+O resultado:
+→ Patrimônio pessoal separado da exposição operacional
+→ Planejamento sucessório estruturado para os filhos
+→ Parte dos investimentos em conta americana
+→ Clareza total sobre o que está protegido e o que ainda precisa de atenção
+
+"Passei 20 anos construindo patrimônio sem pensar em como protegê-lo. A holding nos EUA foi a decisão mais importante que tomei nos últimos 5 anos."
+
+Se você tem patrimônio acumulado e ainda não pensou em como protegê-lo, esse post é para você.
+
+📲 Link na bio — primeira conversa é gratuita.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST S4-4 -->
+    <div class="post-block" id="post-s4-4">
+      <div class="post-block-header">
+        <div>
+          <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
+            <span class="badge badge-carr">Carrossel</span>
+            <span class="badge badge-obj-a">urgência · retenção</span>
+          </div>
+          <div class="post-block-title">O que acontece com sua LLC se você parar de pagar os annual fees?</div>
+          <div class="post-block-meta">25/jul (sex) · publicar 17h–19h · 6 slides</div>
+        </div>
+      </div>
+      <div class="post-block-body">
+        <div class="inner-section">
+          <div class="inner-label">Copy de cada slide</div>
+          <div class="slide-row"><div class="slide-num">1</div><div><div class="slide-art">ARTE: Pergunta de alerta, fundo escuro.</div><div class="slide-copy">"O que acontece com sua LLC se você parar de pagar os annual fees?" — Resposta no próximo slide.</div></div></div>
+          <div class="slide-row"><div class="slide-num">2</div><div><div class="slide-art">ARTE: Linha do tempo de consequências — visual progressivo.</div><div class="slide-copy">Mês 1–3: empresa entra em atraso. Mês 4–6: multa acumulada + perda do good standing. Após 1 ano: empresa pode ser dissolvida administrativamente pelo estado.</div></div></div>
+          <div class="slide-row"><div class="slide-num">3</div><div><div class="slide-art">ARTE: "O que significa perder o good standing?" — ícone de alerta.</div><div class="slide-copy">Texto: "Good standing é o status de empresa ativa e regular. Sem ele: você não consegue abrir conta bancária, não pode assinar contratos formais, e perde a proteção de responsabilidade limitada."</div></div></div>
+          <div class="slide-row"><div class="slide-num">4</div><div><div class="slide-art">ARTE: "Dissolução administrativa" — ícone vermelho.</div><div class="slide-copy">Texto: "Se a empresa for dissolvida pelo estado, o nome pode ser tomado por outra pessoa. Reativar a LLC depois custa mais caro e exige documentação adicional — quando é possível."</div></div></div>
+          <div class="slide-row"><div class="slide-num">5</div><div><div class="slide-art">ARTE: "Como evitar" — checklist verde.</div><div class="slide-copy">✓ Mantenha calendário de vencimentos dos annual fees<br>✓ Verifique o status da sua empresa no site do estado anualmente<br>✓ Não deixe o registered agent vencer sem renovação<br>✓ Tenha suporte contábil que monitore isso por você</div></div></div>
+          <div class="slide-row"><div class="slide-num">6</div><div><div class="slide-art">ARTE: CTA — logo KwikLedgers.</div><div class="slide-copy">"A KwikLedgers monitora os vencimentos da sua LLC e avisa antes de qualquer problema. Link na bio."</div></div></div>
+        </div>
+        <div class="inner-section">
+          <div class="inner-label">Legenda</div>
+          <div class="legenda-box">Você sabia que uma LLC pode ser dissolvida administrativamente pelo estado americano?
+
+Acontece quando o proprietário para de pagar os annual fees — as taxas anuais de manutenção.
+
+E as consequências são mais graves do que parecem:
+
+→ Perda do good standing (status de empresa ativa e regular)
+→ Impossibilidade de abrir conta bancária ou assinar contratos formais
+→ Perda da proteção de responsabilidade limitada
+→ Dissolução pelo estado — e o seu nome pode ser registrado por outra pessoa
+
+Reativar uma LLC dissolvida custa mais, demora mais e nem sempre é possível da mesma forma.
+
+A maioria dos casos acontece por descuido: a pessoa abre a empresa, usa por um tempo, deixa de acompanhar os vencimentos.
+
+Não deixa acontecer com você.
+
+💾 Salva esse post e confere a situação da sua LLC.
+
+📲 A KwikLedgers monitora os vencimentos e garante que sua empresa fique sempre em dia — link na bio.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ========== SEMANA 5 ========== -->
+  <div id="semana5">
+    <div class="section-header">
+      <div class="section-title-text">Semana 5 — 28 a 30 jul</div>
+    </div>
+
+    <!-- POST S5-1 -->
+    <div class="post-block" id="post-s5-1">
+      <div class="post-block-header">
+        <div>
+          <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
+            <span class="badge badge-carr">Carrossel</span>
+            <span class="badge badge-obj-p">engajamento · comunidade</span>
+          </div>
+          <div class="post-block-title">5 perguntas que mais recebemos em julho — respondidas</div>
+          <div class="post-block-meta">28/jul (seg) · publicar 17h–19h · 7 slides</div>
+        </div>
+      </div>
+      <div class="post-block-body">
+        <div class="inner-section">
+          <div class="alert alert-w">Nota: adaptar as perguntas reais recebidas ao longo do mês nos comentários e direct antes de publicar.</div>
+          <div class="inner-label">Copy de cada slide</div>
+          <div class="slide-row"><div class="slide-num">1</div><div><div class="slide-art">ARTE: Título com destaque, fundo escuro.</div><div class="slide-copy">"Vocês perguntaram. A gente responde." — As 5 dúvidas mais frequentes de julho.</div></div></div>
+          <div class="slide-row"><div class="slide-num">2</div><div><div class="slide-art">ARTE: Pergunta #1 em destaque azul.</div><div class="slide-copy">P: "Posso abrir LLC sendo MEI no Brasil?" R: Sim. Ter MEI no Brasil não impede a abertura de LLC nos EUA. São estruturas independentes em países diferentes. Você pode ter as duas ao mesmo tempo.</div></div></div>
+          <div class="slide-row"><div class="slide-num">3</div><div><div class="slide-art">ARTE: Pergunta #2.</div><div class="slide-copy">P: "Preciso de contador americano?" R: Depende da sua operação. Para LLCs simples sem funcionários e com faturamento abaixo de determinado threshold, as obrigações são mínimas. A KwikLedgers orienta sobre o que é necessário para o seu caso.</div></div></div>
+          <div class="slide-row"><div class="slide-num">4</div><div><div class="slide-art">ARTE: Pergunta #3.</div><div class="slide-copy">P: "Quanto tempo para abrir conta bancária nos EUA?" R: Varia entre 15 e 45 dias após a abertura da LLC, dependendo do banco. Alguns bancos digitais internacionais (como Mercury ou Relay) abrem em menos tempo para não-residentes.</div></div></div>
+          <div class="slide-row"><div class="slide-num">5</div><div><div class="slide-art">ARTE: Pergunta #4.</div><div class="slide-copy">P: "Florida ou Delaware — qual escolher?" R: Florida é melhor para negócios que vão operar fisicamente no estado ou ter clientes lá. Delaware é mais vantajoso para quem busca estrutura corporativa mais robusta, privacidade e acesso a investidores.</div></div></div>
+          <div class="slide-row"><div class="slide-num">6</div><div><div class="slide-art">ARTE: Pergunta #5.</div><div class="slide-copy">P: "Posso fechar a LLC se não usar mais?" R: Sim. O processo de dissolução é formal mas não é complicado. É importante fazer corretamente para não deixar obrigações em aberto. A KwikLedgers orienta esse processo.</div></div></div>
+          <div class="slide-row"><div class="slide-num">7</div><div><div class="slide-art">ARTE: CTA de engajamento.</div><div class="slide-copy">"Tem mais dúvidas? Manda nos comentários — respondemos todas." + logo KwikLedgers.</div></div></div>
+        </div>
+        <div class="inner-section">
+          <div class="inner-label">Legenda</div>
+          <div class="legenda-box">Em julho, vocês mandaram muita coisa no direct e nos comentários.
+
+Separamos as 5 perguntas mais frequentes — com respostas diretas.
+
+1. Posso abrir LLC sendo MEI? Sim. São estruturas independentes.
+2. Preciso de contador americano? Depende da operação — orientamos caso a caso.
+3. Quanto tempo para abrir conta nos EUA? Entre 15 e 45 dias após a abertura da LLC.
+4. Florida ou Delaware? Depende do seu modelo — desliza para entender.
+5. Posso fechar a LLC se não usar? Sim, com processo formal.
+
+Desliza para as respostas completas.
+
+Tem mais dúvidas? Manda nos comentários — a gente responde.
+
+📲 Ou acessa o link na bio para um diagnóstico gratuito.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST S5-2 -->
+    <div class="post-block" id="post-s5-2">
+      <div class="post-block-header">
+        <div>
+          <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
+            <span class="badge badge-reel">Reel</span>
+            <span class="badge badge-obj-a">fiscal · alcance</span>
+          </div>
+          <div class="post-block-title">Distribuição de lucros da LLC: o que a Receita Federal realmente observa</div>
+          <div class="post-block-meta">29/jul (ter) · publicar 12h–13h · duração ideal 40–50s</div>
+        </div>
+      </div>
+      <div class="post-block-body">
+        <div class="inner-section">
+          <div class="inner-label">Roteiro — texto na tela + fala do apresentador</div>
+          <div class="reel-row"><div class="reel-time">0–3s<br>Gancho</div><div><div class="reel-screen">TELA: "Distribuiu lucro da LLC? A Receita Federal viu."</div><div class="reel-talk">FALA: "Com as novas regras, a Receita Federal brasileira está muito mais atenta à movimentação de LLCs no exterior. Veja o que eles observam."</div></div></div>
+          <div class="reel-row"><div class="reel-time">3–15s<br>Ponto 1</div><div><div class="reel-screen">TELA: "#1 — Lucros acumulados, não só distribuídos"</div><div class="reel-talk">FALA: "A nova regra exige que lucros mantidos na LLC sejam reconhecidos anualmente no IRPF, mesmo sem distribuição. Guardar dinheiro na empresa americana não adia mais a tributação no Brasil."</div></div></div>
+          <div class="reel-row"><div class="reel-time">15–28s<br>Ponto 2</div><div><div class="reel-screen">TELA: "#2 — A origem dos valores enviados ao Brasil"</div><div class="reel-talk">FALA: "Toda remessa da LLC para conta pessoal no Brasil precisa estar documentada. A RF cruza dados de câmbio com a declaração de bens no exterior. Inconsistência gera questionamento."</div></div></div>
+          <div class="reel-row"><div class="reel-time">28–42s<br>Ponto 3</div><div><div class="reel-screen">TELA: "#3 — Imposto pago nos EUA como crédito"</div><div class="reel-talk">FALA: "A boa notícia: imposto pago nos EUA pode ser aproveitado como crédito no Brasil, evitando dupla tributação. Mas isso depende de documentação correta e estrutura adequada."</div></div></div>
+          <div class="reel-row"><div class="reel-time">42–50s<br>CTA</div><div><div class="reel-screen">TELA: "Sua LLC está declarada corretamente?"</div><div class="reel-talk">FALA: "Se tiver dúvida, o melhor momento para regularizar é agora. Link na bio — a KwikLedgers avalia sua situação."</div></div></div>
+        </div>
+        <div class="inner-section">
+          <div class="inner-label">Legenda</div>
+          <div class="legenda-box">Você distribuiu lucros da sua LLC este ano?
+
+A Receita Federal brasileira está mais atenta do que nunca a esse movimento.
+
+Três pontos que você precisa entender:
+
+#1 — Lucros acumulados, não só distribuídos
+Com as novas regras, lucros mantidos na LLC devem ser reconhecidos anualmente no IRPF — mesmo sem distribuição. Guardar dinheiro na empresa americana não adia mais a tributação.
+
+#2 — A origem das remessas importa
+Toda transferência da LLC para conta pessoal no Brasil precisa estar documentada e coerente com a declaração de bens no exterior. A RF cruza dados de câmbio com o IRPF.
+
+#3 — Imposto pago nos EUA pode virar crédito no Brasil
+Quem tem estrutura adequada usa o imposto pago nos EUA para reduzir o que deve no Brasil. Mas isso depende de documentação correta e planejamento.
+
+Quem está em ordem não tem nada a temer. Quem não está, o melhor momento para regularizar é agora.
+
+📲 Link na bio — a KwikLedgers avalia sua situação e orienta o próximo passo.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST S5-3 -->
+    <div class="post-block" id="post-s5-3">
+      <div class="post-block-header">
+        <div>
+          <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
+            <span class="badge badge-img">Imagem</span>
+            <span class="badge badge-top">Alta prioridade</span>
+            <span class="badge badge-obj-c">conversão · CTA direto</span>
+          </div>
+          <div class="post-block-title">Sua empresa nos EUA pode estar pronta em 7 a 10 dias úteis</div>
+          <div class="post-block-meta">30/jul (qua) · publicar 14h–16h · 1 imagem · fechamento do mês</div>
+        </div>
+      </div>
+      <div class="post-block-body">
+        <div class="inner-section">
+          <div class="inner-label">Arte — o que vai na imagem</div>
+          <div class="arte-box">Fundo branco ou azul muito claro. Texto central grande e limpo: <strong>"7 a 10 dias úteis."</strong> Linha abaixo, menor: "Tempo para sua empresa estar aberta nos EUA após o envio dos documentos." Três ícones embaixo: sem visto · sem morar lá · sem sócio americano. Logo KwikLedgers + botão laranja com "Link na bio".</div>
+        </div>
+        <div class="inner-section">
+          <div class="inner-label">Legenda</div>
+          <div class="legenda-box">Julho está acabando.
+
+Se você passou o mês pensando em abrir empresa nos EUA — e ainda não começou — esse post é para você.
+
+Em 7 a 10 dias úteis após o envio dos documentos, sua LLC já está registrada.
+
+Sem precisar de visto.
+Sem precisar morar nos EUA.
+Sem precisar de sócio americano.
+Por R$ 650 em pagamento único.
+
+A KwikLedgers cuida de todo o processo — do formulário ao documento oficial de abertura.
+
+Você só precisa dar o primeiro passo.
+
+📲 Link na bio — comece hoje e entre em agosto com sua empresa nos EUA funcionando.
+
+#EmpresaNosEUA #LLC #KwikLedgers #EmpreendedorBrasileiro #FaturarEmDolar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ESTRATEGIA -->
+  <div id="estrategia">
+    <div class="section-header">
+      <div class="section-title-text">Estratégia de publicação</div>
+    </div>
+
+    <div class="alert alert-s">
+      <strong>Horários recomendados:</strong> Reels → ter ou qui, 12h–13h · Carrosséis → seg ou qua, 17h–19h · Imagens → sex, 14h–16h
+    </div>
+    <div class="alert alert-i">
+      <strong>Regra de ouro para legendas:</strong> Toda legenda começa com o problema ou a pergunta — nunca com "Na KwikLedgers...". Posts que abrem com a marca têm alcance 40% menor que a média do perfil.
+    </div>
+
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-title">Estrutura de Reel</div>
+        <div class="tip-body">0–3s: gancho (dado ou problema chocante)<br>3–20s: desenvolvimento rápido<br>20–40s: solução prática<br>40–45s: CTA direto</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-title">Estrutura de carrossel</div>
+        <div class="tip-body">Slide 1: promessa ou pergunta<br>Slides 2–6: dado + desenvolvimento<br>Slide 7: resumo visual<br>Slide 8: CTA com ação clara</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-title">CTAs que convertem</div>
+        <div class="tip-body">"Salva esse post" → saves<br>"Manda pra quem precisa" → shares<br>"Comenta [palavra]" → engajamento<br>"Link na bio" → conversão</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-title">Temas a evitar</div>
+        <div class="tip-body">Expansão genérica sem dado novo<br>Copa como gancho vago<br>Posts que abrem com a marca<br>Frases motivacionais sem substância</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:3rem;padding:1.5rem;background:white;border:1px solid var(--border);border-radius:var(--radius-lg);text-align:center;">
+    <div style="font-size:13px;color:var(--gray-400);margin-bottom:4px;">Produzido por KwikLedgers · Head de Conteúdo & Growth Strategy</div>
+    <div style="font-size:12px;color:var(--gray-400);">@kwikledgersbr · Calendário editorial julho 2026 · 18 posts · 5 semanas</div>
+  </div>
+
+</div>
+
+<script>
+  const sections = ['semana1','semana2','semana3','semana4','semana5','estrategia','calendario'];
+  const navBtns = document.querySelectorAll('.nav-btn');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting) {
+        navBtns.forEach(b => b.classList.remove('active'));
+        const matching = document.querySelector(`.nav-btn[href="#${e.target.id}"]`);
+        if(matching) matching.classList.add('active');
+      }
+    });
+  }, { threshold: 0.2 });
+  sections.forEach(id => { const el = document.getElementById(id); if(el) observer.observe(el); });
+</script>
+
+</body>
+</html>
